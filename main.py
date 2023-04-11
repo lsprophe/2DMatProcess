@@ -45,18 +45,40 @@ class Graph:
 def main():
     foldername = 'C:/Users/laurp/Code/Projects/FlakeFinder/wrinkledetect/dataset/ready/'
 
+    ######################### NP vs NS STUDY #########################
+    #filename_base = 'n117-np2_3-20mnmlb-16gray'
+    #filename_base = 'n117-ns3n-a-lb20mnm-16gray'
+
+    # # np 20 mn/m sample
+    # vscale = 58.5
+    # hscale = 5000
+
+    # # ns 20 mn/m sample
+    # vscale = 104
+    # hscale = 5000
+
+    ######################### COVERAGE STUDY #########################
+    #filename_base = 'np2_3-n117-spincoat-0etoh-16gray'
+    #filename_base = 'n117-np2_3-lb-nocompression-l2-16gray'
+    #filename_base = 'n117-np2_3-20mnmlb-16gray'
+
+    # # 0% EtOH sample
+    # vscale = 54.7
+    # hscale = 3966.34
+
+    # # lb uncompressed sample
+    # vscale = 150
+    # hscale = 5000
+
+    # # lb 20 mn/m sample
+    # vscale = 58.5
+    # hscale = 5000
+
+    ######################### ETHANOL STUDY #########################
     #filename_base = 'np2_3-n117-spincoat-0etoh-16gray'
     #filename_base = 'np2_3-spincoat-n117-25etoh-fdown-l2-16gray'
     #filename_base = 'np2_3-spincoat-n117-50etoh-fup-16gray'
-    filename_base = 'np2_3-spincoat-n117-75etoh-16gray'
-    
-    f_img_filepath = foldername + filename_base + '-flakes.png'
-    img_filepath = foldername + filename_base + '.png'
-
-    img = read_image(img_filepath)
-    f_img = read_image(f_img_filepath)
-    outimg = './outputs/' + filename_base + 'wrinkles.png'
-
+    #filename_base = 'np2_3-spincoat-n117-75etoh-16gray'
     
     # # 0% EtOH sample
     # vscale = 54.7
@@ -70,17 +92,24 @@ def main():
     # vscale = 80
     # hscale = 5000
 
-    # 75% EtOH sample
-    vscale = 86
-    hscale = 4782.03
+    # # 75% EtOH sample
+    # vscale = 86
+    # hscale = 4782.03
   
     # #100% EtOH sample 1
-    # vscale = 
+    # vscale = 73.3
     # hscale = 5000
 
     # #100% EtOH sample 2 
-    # vscale =
+    # vscale = 72.5
     # hscale = 5000
+
+    f_img_filepath = foldername + filename_base + '-flakes.png'
+    img_filepath = foldername + filename_base + '.png'
+
+    img = read_image(img_filepath)
+    f_img = read_image(f_img_filepath)
+    outimg = './outputs/' + filename_base + 'wrinkles.png'
 
     peaks, valleys = find_wrinkles(img, flake_img=f_img, out_img=outimg, plot_on=True)
     n_peaks, n_valleys, heights_av, heights_mid, widths = calculate_wrinkle_values(img, peaks, valleys, vscale, hscale, out_img=outimg)
