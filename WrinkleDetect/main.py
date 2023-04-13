@@ -47,7 +47,8 @@ def main():
 
     ######################### NP vs NS STUDY #########################
     #filename_base = 'n117-np2_3-20mnmlb-16gray'
-    #filename_base = 'n117-ns3n-a-lb20mnm-16gray'
+    #filename_base = 'n117-ns3n-a-lb20mnm'
+    #filename_base = 'n117-ns3n-a-lb20mnm-2'
 
     # # np 20 mn/m sample
     # vscale = 58.5
@@ -58,11 +59,19 @@ def main():
     # hscale = 5000
 
     ######################### COVERAGE STUDY #########################
-    #filename_base = 'np2_3-n117-spincoat-0etoh-16gray'
-    #filename_base = 'n117-np2_3-lb-nocompression-l2-16gray'
-    #filename_base = 'n117-np2_3-20mnmlb-16gray'
+    filename_base = 'np2_3-n117-spincoat-0etoh'
+    #filename_base = 'np2_3-n117-spincoat-0etoh-fdown-l2'
+    # filename_base = 'n117-np2_3-lb-nocompression'
+    # filename_base = 'n117-np2_3-lb-nocompression-l2'
+    # filename_base = 'n117-np2_3-20mnmlb'
+    # filename_base = 'n117-np2_3-20mnmlb-l2'
+    
 
-    # # 0% EtOH sample
+    # 0% EtOH sample
+    vscale = 54.7
+    hscale = 3966.34
+
+    # # 0% EtOH sample 2
     # vscale = 54.7
     # hscale = 3966.34
 
@@ -70,16 +79,26 @@ def main():
     # vscale = 150
     # hscale = 5000
 
+    # # lb uncompressed sample 2
+    # vscale = 150
+    # hscale = 5000
+
     # # lb 20 mn/m sample
     # vscale = 58.5
     # hscale = 5000
 
+    # # lb 20 mn/m sample 2
+    # vscale = 58.5
+    # hscale = 5000
+
     ######################### ETHANOL STUDY #########################
-    #filename_base = 'np2_3-n117-spincoat-0etoh-16gray'
-    #filename_base = 'np2_3-spincoat-n117-25etoh-fdown-l2-16gray'
-    #filename_base = 'np2_3-spincoat-n117-50etoh-fup-16gray'
-    #filename_base = 'np2_3-spincoat-n117-75etoh-16gray'
-    
+    #filename_base = 'np2_3-n117-spincoat-0etoh'
+    # filename_base = 'np2_3-spincoat-n117-25etoh-fdown-l2'
+    # filename_base = 'np2_3-spincoat-n117-50etoh-fup'
+    # filename_base = 'np2_3-spincoat-n117-75etoh'
+    # filename_base = 'np2_3-spincoat-n117-100etoh'
+    #filename_base = 'np2_3-spincoat-n117-100etoh-2'
+
     # # 0% EtOH sample
     # vscale = 54.7
     # hscale = 3966.34
@@ -104,15 +123,21 @@ def main():
     # vscale = 72.5
     # hscale = 5000
 
-    f_img_filepath = foldername + filename_base + '-flakes.png'
-    img_filepath = foldername + filename_base + '.png'
+    f_img_filepath = foldername + filename_base + '-16gray-flakes.png'
+    img_filepath_16gray = foldername + filename_base + '-16gray' + '.png'
+    img_filepath_txt = foldername + filename_base + '.txt'
 
-    img = read_image(img_filepath)
-    f_img = read_image(f_img_filepath)
+    img = read_image(img_filepath_16gray)
+    try:
+        f_img = read_image(f_img_filepath)
+    except:
+        f_img = None
+
+    img_txt = read_txt_file(img_filepath_txt)
     outimg = './outputs/' + filename_base + 'wrinkles.png'
 
-    peaks, valleys = find_wrinkles(img, flake_img=f_img, out_img=outimg, plot_on=True)
-    n_peaks, n_valleys, heights_av, heights_mid, widths = calculate_wrinkle_values(img, peaks, valleys, vscale, hscale, out_img=outimg)
+    peaks, valleys = find_wrinkles(img, img_text=img_txt, flake_img=f_img, out_img=outimg, plot_on=False)
+    n_peaks, n_valleys, heights_av, heights_mid, widths = calculate_wrinkle_values(img, peaks, valleys, vscale, hscale, out_img=outimg, img_text=img_txt)
     SA_graphene = calculate_coverage(hscale, f_img)
 
     w_inds = range(n_peaks)
@@ -130,23 +155,23 @@ def main():
         writer.writerow(["wrinkle ind", "average height", "middle height", "middle width"])
         writer.writerows(csv_rows)
 
-    heights_av_hist = plt.hist(heights_av)
-    plt.title("Wrinkle Heights, NP Graphene LB")
-    plt.xlabel("Wrinkle Average Heights (nm)")
-    plt.ylabel("Count")
-    plt.show()
+    # heights_av_hist = plt.hist(heights_av)
+    # plt.title("Wrinkle Heights, NP Graphene LB")
+    # plt.xlabel("Wrinkle Average Heights (nm)")
+    # plt.ylabel("Count")
+    # plt.show()
 
-    heights_mid_hist = plt.hist(heights_mid)
-    plt.title("Wrinkle Heights, NP Graphene LB")
-    plt.xlabel("Wrinkle Middle Heights (nm)")
-    plt.ylabel("Count")
-    plt.show()
+    # heights_mid_hist = plt.hist(heights_mid)
+    # plt.title("Wrinkle Heights, NP Graphene LB")
+    # plt.xlabel("Wrinkle Middle Heights (nm)")
+    # plt.ylabel("Count")
+    # plt.show()
 
-    widths_hist = plt.hist(widths)
-    plt.title("Wrinkle Widths, NP Graphene LB")
-    plt.xlabel("Wrinkle Widths (nm)")
-    plt.ylabel("Count")
-    plt.show()
+    # widths_hist = plt.hist(widths)
+    # plt.title("Wrinkle Widths, NP Graphene LB")
+    # plt.xlabel("Wrinkle Widths (nm)")
+    # plt.ylabel("Count")
+    # plt.show()
 
 def read_image(img_path):
     img = cv2.imread(img_path, cv2.IMREAD_ANYDEPTH)
@@ -154,7 +179,7 @@ def read_image(img_path):
     return img
 
 def calculate_coverage(hscale, mask):
-    if mask.any():
+    if mask is not None:
         mask_bool = mask.astype(np.bool_)
         percent_coverage = np.sum(mask_bool) / mask_bool.size
         print(percent_coverage)
@@ -197,7 +222,8 @@ def filter_wrinkles(peaks, valleys):
 
         #if (std_x/len(p))<
 
-def calculate_wrinkle_values(img_gray, peaks, valleys, vscale, hscale, plot_on=True, out_img=None):
+def calculate_wrinkle_values(img_gray, peaks, valleys, vscale, hscale, plot_on=True, out_img=None, img_text=None):
+    
     hscale_px = hscale / (img_gray.shape[0])
     # find pixel closest to geometric middle of peak
     heights_avg = np.empty(len(peaks))
@@ -232,18 +258,24 @@ def calculate_wrinkle_values(img_gray, peaks, valleys, vscale, hscale, plot_on=T
         hdist = euclid_dist(mpx_v, mpx_p)
         wid = hdist * hscale_px
 
-        # NOTE: unclear how I should do the height??
-        avg_peak = np.mean(img_gray[w])
-        avg_val = np.mean(img_gray[val])
-
-        h_av = (avg_peak - avg_val)/65535 * vscale
-
-        h_mid = (img_gray[mpx_p] - img_gray[mpx_v])/65535 * vscale
+        if img_text is None:
+            # NOTE: unclear how I should do the height??
+            avg_peak = np.mean(img_gray[w])
+            avg_val = np.mean(img_gray[val])
+            h_av = (avg_peak - avg_val)/65535 * vscale
+            h_mid = (img_gray[mpx_p] - img_gray[mpx_v])/65535 * vscale
+        else:
+            h_av = np.mean(img_text[w])
+            h_mid = np.mean(img_text[val])
 
         heights_avg[i] = h_av
         heights_mid[i] = h_mid
         widths[i] = wid
 
+    if img_text is not None:
+        # convert to nm
+        heights_avg = heights_avg * 10**9
+        heights_mid = heights_mid * 10**9
     return len(peaks), len(valleys), heights_avg, heights_mid, widths        
 
 
@@ -306,9 +338,11 @@ def find_wrinkles_by_flake_size(img, flake_imgs, v_scale, h_scale, nn=3, plot_on
     )
     plt.show()
     
-def find_wrinkles(img, flake_img=None, out_img=None, nn=3, buff=0, plot_on=False):
+def find_wrinkles(img, img_text=None, flake_img=None, out_img=None, nn=3, buff=0, plot_on=False):
     img_colour = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-
+    if img_text is not None:
+        print('using text image')
+        img = img_text
     # find pixels where some number of the surrounding pixels are of different sign
     w_img = np.empty_like(img)
     sz0 = img.shape[0]
@@ -328,15 +362,15 @@ def find_wrinkles(img, flake_img=None, out_img=None, nn=3, buff=0, plot_on=False
         num = np.sum((n + buff) < i)
         w_img[it.multi_index] = num
 
-    hills = w_img > 24
+    hills = w_img > 23
     valleys = w_img < 11
 
     wrinkle_peaks = group_wrinkles(hills, boundaries=flake_img)
     wrinkle_valleys = group_wrinkles(valleys, boundaries=flake_img)
 
     # remove wrinkles that are less than 15 pixels
-    wrinkle_peaks = [xi for xi in wrinkle_peaks if len(xi) > 30]
-    wrinkle_valleys = [xi for xi in wrinkle_valleys if len(xi) > 30]
+    wrinkle_peaks = [xi for xi in wrinkle_peaks if len(xi) > 20]
+    wrinkle_valleys = [xi for xi in wrinkle_valleys if len(xi) > 20]
 
     if plot_on or out_img:
         # show on image where identified wrinkles are
@@ -355,6 +389,15 @@ def find_wrinkles(img, flake_img=None, out_img=None, nn=3, buff=0, plot_on=False
             cv2.waitKey()
 
     return wrinkle_peaks, wrinkle_valleys
+
+def read_txt_file(file):
+    height_img = []
+    with open(file, newline='') as csvfile:
+        reader = csv.reader(csvfile, dialect='excel-tab')
+        for row in reader:
+            height_img.append(row)
+    
+    return np.array(height_img, dtype=np.float64)
 
 if __name__ =='__main__':
     main()
