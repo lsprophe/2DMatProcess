@@ -6,14 +6,14 @@ Detects and quantifies wrinkles, designed for analyzing graphene on Nafion.  Out
 
 ### Example
 Input AFM image of graphen flakes on Nafion
-![AFM Image](https://github.com/lsprophe/2DMatProcess/WrinkleDetect/examples/np2_3-spincoat-n117-75etoh-16gray.png?raw=true)
+![AFM Image](./2DMatProcess/WrinkleDetect/examples/np2_3-spincoat-n117-75etoh-16gray.png?raw=true)
 
 Input "mask", manually created to indicate locations for analysis (where the graphene is)
-![AFM Image Mask](https://github.com/lsprophe/2DMatProcess/WrinkleDetect/examples/np2_3-spincoat-n117-75etoh-16gray-flakes.png?raw=true)
+![AFM Image Mask](./2DMatProcess/WrinkleDetect/examples/np2_3-spincoat-n117-75etoh-16gray-flakes.png?raw=true)
 
 Output wrinkle locations (peaks are indicated in green, valleys are indicated in blue)
-![Wrinkle Locations](https://github.com/lsprophe/2DMatProcess/WrinkleDetect/examples/np2_3-spincoat-n117-75etohwrinkles.png?raw=true)
+![Wrinkle Locations](./2DMatProcess/WrinkleDetect/examples/np2_3-spincoat-n117-75etohwrinkles.png?raw=true)
 
-The program outputs a [CSV](np2_3-spincoat-n117-75etoh.csv)
+The program outputs a [CSV](./2DMatProcess/WrinkleDetect/examples/np2_3-spincoat-n117-75etoh.csv)
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
